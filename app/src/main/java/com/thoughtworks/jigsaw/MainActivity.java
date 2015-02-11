@@ -1,14 +1,16 @@
 package com.thoughtworks.jigsaw;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements IMainActivity {
 
     private MainController controller;
 
@@ -48,5 +50,16 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Context context() {
+        return this;
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast toast =  Toast.makeText(context(), message, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

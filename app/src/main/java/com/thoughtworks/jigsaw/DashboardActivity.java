@@ -1,5 +1,7 @@
 package com.thoughtworks.jigsaw;
 
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,6 +47,25 @@ public class DashboardActivity extends ActionBarActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // When the tab is selected, switch to the
+                // corresponding page in the ViewPager.
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+            }
+
+            @Override
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+            }
+        };
 
     }
 

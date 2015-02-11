@@ -7,9 +7,9 @@ import android.util.Log;
  * Created by hkumar on 09/02/2015.
  */
 public class MainController {
-    private MainActivity mView;
+    private IMainActivity mView;
 
-    public MainController(MainActivity view) {
+    public MainController(IMainActivity view) {
         mView = view;
     }
 
@@ -20,8 +20,11 @@ public class MainController {
     public void onLogin() {
         if(isAuthenticated()) {
             Log.i("Main Activity", "Log in successful.");
-            Intent intent = new Intent(mView, DashboardActivity.class);
+            Intent intent = new Intent(mView.context(), DashboardActivity.class);
             this.mView.startActivity(intent);
+        }
+        else {
+            this.mView.showMessage("Unable to authenticate");
         }
     }
 }
