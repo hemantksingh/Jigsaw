@@ -1,6 +1,6 @@
 package com.thoughtworks.jigsaw;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -53,13 +53,13 @@ public class MainActivity extends ActionBarActivity implements IMainActivity {
     }
 
     @Override
-    public Context context() {
-        return this;
+    public void showMessage(String message) {
+        Toast toast =  Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override
-    public void showMessage(String message) {
-        Toast toast =  Toast.makeText(context(), message, Toast.LENGTH_SHORT);
-        toast.show();
+    public void startActivity(Class<?> activityClass) {
+        startActivity(new Intent(this, activityClass));
     }
 }

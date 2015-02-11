@@ -1,6 +1,5 @@
 package com.thoughtworks.jigsaw;
 
-import android.content.Intent;
 import android.util.Log;
 
 /**
@@ -20,8 +19,7 @@ public class MainController {
     public void onLogin() {
         if(isAuthenticated()) {
             Log.i("Main Activity", "Log in successful.");
-            Intent intent = new Intent(mView.context(), DashboardActivity.class);
-            this.mView.startActivity(intent);
+            this.mView.startActivity(DashboardActivity.class);
         }
         else {
             this.mView.showMessage("Unable to authenticate");
