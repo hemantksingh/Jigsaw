@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.thoughtworks.core.Authorization;
 import com.thoughtworks.core.IMainActivity;
 import com.thoughtworks.core.MainController;
 
@@ -19,7 +20,7 @@ public class MainActivity extends ActionBarActivity implements IMainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.controller = new MainController(this);
+        this.controller = new MainController(this, new Authorization());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

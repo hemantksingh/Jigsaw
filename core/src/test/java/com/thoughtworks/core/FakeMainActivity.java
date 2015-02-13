@@ -5,10 +5,11 @@ package com.thoughtworks.core;
  */
 public class FakeMainActivity implements IMainActivity {
     private Activity startedActivity;
+    private String displayedMessage;
 
     @Override
     public void showMessage(String message) {
-
+        displayedMessage = message;
     }
 
     @Override
@@ -18,5 +19,9 @@ public class FakeMainActivity implements IMainActivity {
 
     public Activity getStartedActivity() {
         return startedActivity;
+    }
+
+    public String getDisplayedMessage() {
+        return displayedMessage;
     }
 }

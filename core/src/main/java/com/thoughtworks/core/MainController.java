@@ -5,17 +5,15 @@ package com.thoughtworks.core;
  */
 public class MainController {
     private IMainActivity mView;
+    private IAuthorization mAuthorization;
 
-    public MainController(IMainActivity view) {
+    public MainController(IMainActivity view, IAuthorization authorization) {
         mView = view;
-    }
-
-    private boolean isAuthenticated() {
-        return true;
+        mAuthorization = authorization;
     }
 
     public void onLogin() {
-        if(isAuthenticated()) {
+        if(mAuthorization.isAuthenticated()) {
             //Log.i("Main Activity", "Log in successful.");
             this.mView.startActivity(Activity.Dashboard);
         }

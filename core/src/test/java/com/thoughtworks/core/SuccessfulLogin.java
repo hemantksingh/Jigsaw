@@ -6,10 +6,13 @@ public class SuccessfulLogin {
 
     @org.junit.Test
     public void startsTheDashboard() throws Exception {
-        FakeMainActivity activity =  new FakeMainActivity();
-        MainController controller = new MainController(activity);
+        FakeAuthorization fakeAuthorization = new FakeAuthorization();
+        fakeAuthorization.setAuthenticated(true);
+        FakeMainActivity fakeMainActivity =  new FakeMainActivity();
+        MainController controller = new MainController(fakeMainActivity, fakeAuthorization);
         controller.onLogin();
 
-        Assert.assertEquals(Activity.Dashboard, activity.getStartedActivity());
+        Assert.assertEquals(Activity.Dashboard, fakeMainActivity.getStartedActivity());
     }
 }
+
