@@ -1,6 +1,4 @@
-package com.thoughtworks.jigsaw;
-
-import android.util.Log;
+package com.thoughtworks.core;
 
 /**
  * Created by hkumar on 09/02/2015.
@@ -18,8 +16,8 @@ public class MainController {
 
     public void onLogin() {
         if(isAuthenticated()) {
-            Log.i("Main Activity", "Log in successful.");
-            this.mView.startActivity(DashboardActivity.class);
+            //Log.i("Main Activity", "Log in successful.");
+            this.mView.startActivity(Activity.Dashboard);
         }
         else {
             this.mView.showMessage("Unable to authenticate");

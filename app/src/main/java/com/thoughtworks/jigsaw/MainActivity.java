@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.thoughtworks.core.IMainActivity;
+import com.thoughtworks.core.MainController;
+
 
 public class MainActivity extends ActionBarActivity implements IMainActivity {
 
@@ -59,7 +62,16 @@ public class MainActivity extends ActionBarActivity implements IMainActivity {
     }
 
     @Override
-    public void startActivity(Class<?> activityClass) {
-        startActivity(new Intent(this, activityClass));
+    public void startActivity(com.thoughtworks.core.Activity activity) {
+        startActivity(new Intent(this, getActivityClass(activity)));
+    }
+
+    private Class<?> getActivityClass(com.thoughtworks.core.Activity activity) {
+        switch (activity){
+            case Dashboard:
+                return DashboardActivity.class;
+        }
+
+        return null;
     }
 }
