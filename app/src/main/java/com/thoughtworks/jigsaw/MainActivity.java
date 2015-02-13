@@ -57,7 +57,7 @@ public class MainActivity extends ActionBarActivity implements IMainActivity {
     }
 
     @Override
-    public void showMessage(String message) {
+    public void displayMessage(String message) {
         Toast toast =  Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.show();
     }

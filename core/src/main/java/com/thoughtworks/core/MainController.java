@@ -18,7 +18,7 @@ public class MainController {
             this.mView.startActivity(Activity.Dashboard);
         }
         else {
-            this.mView.showMessage("Unable to authenticate");
+            this.mView.displayMessage("Unable to authenticate");
         }
     }
 }

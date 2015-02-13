@@ -8,7 +8,7 @@ public class FakeMainActivity implements IMainActivity {
     private String displayedMessage;
 
     @Override
-    public void showMessage(String message) {
+    public void displayMessage(String message) {
         displayedMessage = message;
     }
 
