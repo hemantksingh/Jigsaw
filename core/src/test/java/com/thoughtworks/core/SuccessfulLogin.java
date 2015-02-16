@@ -1,18 +1,31 @@
 package com.thoughtworks.core;
 
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class SuccessfulLogin {
 
-    @org.junit.Test
-    public void startsTheDashboard() throws Exception {
-        FakeAuthorization fakeAuthorization = new FakeAuthorization();
-        fakeAuthorization.setAuthenticated(true);
-        FakeMainActivity fakeMainActivity =  new FakeMainActivity();
-        MainController controller = new MainController(fakeMainActivity, fakeAuthorization);
-        controller.onLogin();
+    private FakeMainActivity mainActivity;
 
-        Assert.assertEquals(Activity.Dashboard, fakeMainActivity.getStartedActivity());
+    @Before
+    public void setUp() {
+        FakeAuthorization authorization = new FakeAuthorization();
+        authorization.setAuthenticated(true);
+        mainActivity = new FakeMainActivity();
+        MainController controller = new MainController(mainActivity, authorization);
+
+        controller.onLogin();
+    }
+
+    @Test
+    public void startsTheDashboard() throws Exception {
+        Assert.assertEquals(Activity.Dashboard, mainActivity.getStartedActivity());
+    }
+
+    @Test
+    public void doesNotDisplayAMessage() {
+        Assert.assertNull(mainActivity.getDisplayedMessage());
     }
 }
 

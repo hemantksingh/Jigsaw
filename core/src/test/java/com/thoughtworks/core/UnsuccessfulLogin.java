@@ -1,19 +1,30 @@
 package com.thoughtworks.core;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class UnsuccessfulLogin {
 
+    private FakeMainActivity mainActivity;
+
+    @Before
+    public void setUp() {
+        FakeAuthorization authorization = new FakeAuthorization();
+        authorization.setAuthenticated(false);
+        mainActivity = new FakeMainActivity();
+        MainController controller = new MainController(mainActivity, authorization);
+
+        controller.onLogin();
+    }
+
     @Test
     public void showsAMessage() throws Exception {
-        FakeAuthorization fakeAuthorization = new FakeAuthorization();
-        fakeAuthorization.setAuthenticated(false);
+        Assert.assertEquals("Unable to authenticate", mainActivity.getDisplayedMessage());
+    }
 
-        FakeMainActivity fakeMainActivity = new FakeMainActivity();
-        MainController controller = new MainController(fakeMainActivity, fakeAuthorization);
-        controller.onLogin();
-
-        Assert.assertEquals("Unable to authenticate", fakeMainActivity.getDisplayedMessage());
+    @Test
+    public void doesNotStartTheDashboard(){
+        Assert.assertNull(mainActivity.getStartedActivity());
     }
 }
