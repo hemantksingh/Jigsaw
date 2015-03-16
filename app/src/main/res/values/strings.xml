@@ -8,9 +8,15 @@
     <string name="textView_username">Username</string>
     <string name="btn_login">Login</string>
     <string name="title_activity_dashboard">Dashboard</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="hello_world">Hello world!</string>
+
+    <string-array name="options">
+        <item>Dashboard</item>
+        <item>People</item>
+        <item>Projects</item>
+        <item>Assignments</item>
+        <item>Profile</item>
+        <item>Feedback</item>
+        <item>Logout</item>
+    </string-array>
 
 </resources>
