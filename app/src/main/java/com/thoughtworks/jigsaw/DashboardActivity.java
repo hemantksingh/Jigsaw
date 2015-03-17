@@ -1,31 +1,44 @@
 package com.thoughtworks.jigsaw;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.thoughtworks.core.HomeController;
+import com.thoughtworks.core.IHomeActivity;
+import com.thoughtworks.core.Option;
 
 
-public class DashboardActivity extends ActionBarActivity {
+public class DashboardActivity extends ActionBarActivity implements IHomeActivity {
     DrawerLayout mDrawerLayout;
+    ListView mDrawerList;
+    private HomeController mHomeController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.mHomeController = new HomeController(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        ListView mDrawerList = (ListView) findViewById(R.id.drawerList);
-
+        mDrawerList = (ListView) findViewById(R.id.drawerList);
         mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item,
-                getResources().getStringArray(R.array.options)));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this));
+                getAllOptions()));
+        mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mHomeController.onOptionSelected(position);
+            }
+        });
     }
 
     @Override
@@ -50,18 +63,51 @@ public class DashboardActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class DrawerItemClickListener implements android.widget.AdapterView.OnItemClickListener {
-        private DashboardActivity mContext;
+    @Override
+    public void createOptionView(Option option) {
+        Fragment fragment = new OptionFragment();
+        Bundle args = new Bundle();
+        args.putInt(OptionFragment.OPTION_NUMBER, option.Number);
+        fragment.setArguments(args);
 
-        public DrawerItemClickListener(DashboardActivity context) {
-            mContext = context;
+        getFragmentManager().beginTransaction()
+                .replace(R.id.mainContent, fragment)
+                .commit();
+
+        mDrawerList.setItemChecked(option.Number, true);
+        setTitle(option.Name);
+    }
+
+    @Override
+    public String[] getAllOptions() {
+        return getResources().getStringArray(R.array.options);
+    }
+
+    @Override
+    public void closeDrawer() {
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    /**
+     * Fragment that appears in the "content_frame", shows a profile
+     */
+    public static class OptionFragment extends Fragment {
+        public static final String OPTION_NUMBER = "option_number";
+
+        public OptionFragment() {
+            // Empty constructor required for fragment subclasses
         }
 
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            String message = Integer.toString(position);
-            Toast toast =  Toast.makeText(mContext, message, Toast.LENGTH_SHORT);
-            toast.show();
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            /*Passing false indicates the view (fragment) is ready to be attached to the
+            container but not actually attached at this point. This tells Android where
+            this view needs to be placed when it is laid out. The actual layout is
+            handled by Android*/
+            View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+            return rootView;
+
         }
     }
 }
