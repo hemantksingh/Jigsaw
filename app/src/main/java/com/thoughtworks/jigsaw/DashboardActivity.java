@@ -65,7 +65,11 @@ public class DashboardActivity extends ActionBarActivity implements IHomeActivit
 
     @Override
     public void createOptionView(Option option) {
+
         Fragment fragment = new OptionFragment();
+        if(option.Name.equals("Projects"))
+            fragment = new ProjectsFragment();
+
         Bundle args = new Bundle();
         args.putInt(OptionFragment.OPTION_NUMBER, option.Number);
         fragment.setArguments(args);
