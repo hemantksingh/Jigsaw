@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class Project {
     private final String clientName;
-    private final String name;
+    public final String Name;
     private final String description;
     public final int Duration;
     public final String OpportunityOwner;
@@ -23,7 +23,7 @@ public class Project {
                    int probability, String clientPrincipal, String client, String classification) {
 
         this.clientName = clientName;
-        this.name = name;
+        this.Name = name;
         this.description = description;
         this.Duration = duration;
         this.OpportunityOwner = opportunityOwner;
@@ -36,7 +36,7 @@ public class Project {
     }
 
     public String displayName() {
-        return clientName + " - " + name
+        return clientName + " - " + Name
                 + description != null && description.trim() != ""
                 ? " - " + description : "";
     }
