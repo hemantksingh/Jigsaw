@@ -36,8 +36,10 @@ public class Project {
     }
 
     public String displayName() {
-        return clientName + " - " + Name
-                + description != null && description.trim() != ""
-                ? " - " + description : "";
+        if(description != null && description.trim() != "") {
+            return clientName + " - " + Name + " - " + description;
+        }
+
+        return clientName + " - " + Name;
     }
 }
