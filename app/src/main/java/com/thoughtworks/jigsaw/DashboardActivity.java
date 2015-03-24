@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.thoughtworks.core.HomeController;
 import com.thoughtworks.core.IHomeActivity;
 import com.thoughtworks.core.Option;
+import com.thoughtworks.core.ProjectRepository;
 
 
 public class DashboardActivity extends ActionBarActivity implements IHomeActivity {
@@ -75,7 +76,12 @@ public class DashboardActivity extends ActionBarActivity implements IHomeActivit
         Fragment fragment;
         switch (option.Name) {
             case "Projects":
-                fragment = new ProjectsFragment();
+                fragment = ProjectsFragment.newInstance(
+                                R.layout.fragment_projects,
+                                new ProjectFragmentAdapter(
+                                        getSupportFragmentManager(),
+                                        R.layout.fragment_project,
+                                        new ProjectRepository()));
                 break;
             default:
                 fragment = new ProfileFragment();

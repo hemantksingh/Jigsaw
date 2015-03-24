@@ -1,6 +1,5 @@
 package com.thoughtworks.jigsaw;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,30 +14,29 @@ import java.util.List;
  */
 public class ProjectFragmentAdapter extends FragmentPagerAdapter {
 
-    List<Project> mProjects;
+    private final int layoutResource;
+    List<Project> projects;
 
-    public ProjectFragmentAdapter(FragmentManager fm, ProjectRepository repository) {
+    public ProjectFragmentAdapter(FragmentManager fm, int projectFragment,
+                                  ProjectRepository repository) {
         super(fm);
-        mProjects = repository.getProjects();
+        this.layoutResource = projectFragment;
+        this.projects = repository.getProjects();
     }
 
     @Override
     public Fragment getItem(int position) {
-        Bundle args = new Bundle();
-        args.putString("projectName", mProjects.get(position).displayName());
-
-        Fragment fragment = new ProjectFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return ProjectFragment.newInstance(layoutResource,
+                projects.get(position));
     }
 
     @Override
     public int getCount() {
-        return mProjects.size();
+        return projects.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mProjects.get(position).Name;
+        return projects.get(position).Name;
     }
 }
