@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -65,21 +63,29 @@ public class DashboardActivity extends ActionBarActivity implements IHomeActivit
 
     @Override
     public void createOptionView(Option option) {
-
-        Fragment fragment = new OptionFragment();
-        if(option.Name.equals("Projects"))
-            fragment = new ProjectsFragment();
-
-        Bundle args = new Bundle();
-        args.putInt(OptionFragment.OPTION_NUMBER, option.Number);
-        fragment.setArguments(args);
-
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainContent, fragment)
+                .replace(R.id.mainContent, createFragment(option))
                 .commit();
 
         mDrawerList.setItemChecked(option.Number, true);
         setTitle(option.Name);
+    }
+
+    private Fragment createFragment(Option option) {
+        Fragment fragment;
+        switch (option.Name) {
+            case "Projects":
+                fragment = new ProjectsFragment();
+                break;
+            default:
+                fragment = new ProfileFragment();
+                break;
+        }
+
+        Bundle args = new Bundle();
+        args.putInt("option_number", option.Number);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -90,28 +96,5 @@ public class DashboardActivity extends ActionBarActivity implements IHomeActivit
     @Override
     public void closeDrawer() {
         mDrawerLayout.closeDrawer(mDrawerList);
-    }
-
-    /**
-     * Fragment that appears in the "content_frame", shows a profile
-     */
-    public static class OptionFragment extends Fragment {
-        public static final String OPTION_NUMBER = "option_number";
-
-        public OptionFragment() {
-            // Empty constructor required for fragment subclasses
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            /*Passing false indicates the view (fragment) is ready to be attached to the
-            container but not actually attached at this point. This tells Android where
-            this view needs to be placed when it is laid out. The actual layout is
-            handled by Android*/
-            View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-            return rootView;
-
-        }
     }
 }
